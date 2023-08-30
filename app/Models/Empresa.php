@@ -17,4 +17,13 @@ class Empresa extends Model
         'telefone',
         'endereco'
     ];
+
+    public function funcionarios() {
+        return $this->hasMany(Funcionario::class);
+    }
+
+    public function linhas() {
+        return $this->hasMany(Linha::class);
+    }
+
 }
