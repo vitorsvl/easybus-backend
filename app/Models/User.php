@@ -42,4 +42,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /* TIPOS DE USUARIOS */
+    
+    public function administrador()
+    {
+        return $this->hasOne('App\Models\Administrador');
+    }
+
+
+    public function funcionario()
+    {
+        return $this->hasOne('App\Models\Funcionario');
+    }
+
+
+    public function passageiro()
+    {
+        return $this->hasOne('App\Models\Passageiro');
+    }
 }

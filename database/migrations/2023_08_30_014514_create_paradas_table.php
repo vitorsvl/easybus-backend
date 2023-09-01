@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('paradas', function (Blueprint $table) {
             $table->id();
             $table->string('local');
-            $table->unsignedBigInteger('viagem_id');
+            // $table->unsignedBigInteger('viagem_id');
+            $table->foreignId('viagem_id')->constrained()->on('viagens');
+
             $table->timestamps();
 
-            $table->foreign('viagem_id')->references('id')->on('viagens');
+            // $table->foreign('viagem_id')->references('id')->on('viagens');
 
         });
     }

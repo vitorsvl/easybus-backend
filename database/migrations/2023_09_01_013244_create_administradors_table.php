@@ -11,18 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('linhas', function (Blueprint $table) {
+        Schema::create('administradors', function (Blueprint $table) {
             $table->id();
-            $table->string('cidade_origem');
-            $table->string('cidade_destino');
-
-            // $table->unsignedBigInteger('empresa_id');
-            $table->foreignId('empresa_id')->constrained();
-
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-
-            // $table->foreign('empresa_id')->references('id')->on('empresas');
-
         });
     }
 
@@ -31,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('linhas');
+        Schema::dropIfExists('administradors');
     }
 };

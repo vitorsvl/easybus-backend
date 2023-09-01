@@ -19,11 +19,11 @@ class Empresa extends Model
     ];
 
     public function funcionarios() {
-        return $this->hasMany(Funcionario::class);
+        return $this->hasMany('App\Models\Funcionario');
     }
 
     public function linhas() {
-        return $this->hasMany(Linha::class);
+        return $this->hasMany('App\Models\Linha');
     }
 
 }

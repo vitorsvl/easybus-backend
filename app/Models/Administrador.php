@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
-class Passageiro extends User
+class Administrador extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+      protected $fillable = [
         'user_id'
     ];
 
@@ -17,5 +17,4 @@ class Passageiro extends User
     {
         return $this->belongsTo('App\Models\User');
     }
-
 }

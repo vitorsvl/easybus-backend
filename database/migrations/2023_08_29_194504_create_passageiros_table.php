@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('passageiros', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // $table->unsignedBigInteger('user_id');
             // adicionar id de linha fav futuramente 
             $table->timestamps();
 
             # chaves estrangeiras
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

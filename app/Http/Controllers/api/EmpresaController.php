@@ -21,7 +21,8 @@ class EmpresaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {   
+        // dd($request->cnpj);
         Empresa::create($request->all());
 
         return response("[OK]", 200);

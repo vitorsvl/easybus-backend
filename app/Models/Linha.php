@@ -11,14 +11,15 @@ class Linha extends Model
 
     protected $fillable = [
         'cidade_origem',
-        'cidade_destino'
+        'cidade_destino',
+        'empresa_id'
     ];
 
     public function empresa() {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo('App\Models\Empresa');
     }
 
     public function viagens() {
-        return $this->hasMany(Viagem::class);
+        return $this->hasMany('App\Models\Viagem');
     }
 }

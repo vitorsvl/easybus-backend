@@ -10,10 +10,11 @@ class Parada extends Model
     use HasFactory;
 
     protected $fillable = [
-        'local'
+        'local',
+        'id_viagem'
     ];
 
     public function viagem() {
-        return $this->belongsTo(Viagem::class);
+        return $this->belongsTo('App\Models\Viagem');
     }
 }

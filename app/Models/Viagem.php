@@ -13,6 +13,7 @@ class Viagem extends Model
         'horario_partida',
         'horario_chegada',
         'valor_passagem',
+        'id_linha'
     ];
 
     public function linha() {

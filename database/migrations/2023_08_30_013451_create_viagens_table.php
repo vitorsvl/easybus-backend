@@ -17,11 +17,12 @@ return new class extends Migration
             $table->time('horario_chegada');
             $table->float('valor_passagem');
 
-            $table->unsignedBigInteger('linha_id');
+            // $table->unsignedBigInteger('linha_id');
+            $table->foreignId('linha_id')->constrained();
 
             $table->timestamps();
 
-            $table->foreign('linha_id')->references('id')->on('linhas');
+            // $table->foreign('linha_id')->references('id')->on('linhas');
 
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('viagems');
+        Schema::dropIfExists('viagens');
     }
 };

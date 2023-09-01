@@ -11,9 +11,18 @@ class Funcionario extends User
 
     protected $fillable = [
         'cpf',
+        'empresa_id',
+        'user_id'
     ];
 
-    public function empresa() {
-        return $this->belongsTo(Empresa::class);
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
+
+    public function empresa()
+    {
+        return $this->belongsTo('App\Models\Empresa');
+    }
+
 }
