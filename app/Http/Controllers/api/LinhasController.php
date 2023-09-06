@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\LinhaResource;
 use App\Http\Resources\ViagemResource;
+use App\Models\Linha;
 use Illuminate\Http\Request;
 
-use App\Models\Linha;
-// use App\Models\Viagem;
-// use App\Models\Parada;
-
-class LinhaController extends Controller
+class LinhasController extends Controller
 {
     public function index()
     {
@@ -21,15 +19,13 @@ class LinhaController extends Controller
 
     public function store(Request $request)
     {
-        $a = ['a', 'v'];
-        dd($a);
         $linhaData = [
             'cidade_origem' => $request->input('cidade_origem'),
             'cidade_destino' => $request->input('cidade_destino'),
             'empresa_id' => $request->input('empresa_id')
         ];
         // $linhaData = $request->only(['cidade_origem', 'cidade_destino']);
-        // dd($linhaData);
+        dd($request->toArray()); 
         $viagensData = $request->input('viagens');
         
         // dd($linhaData);
@@ -71,9 +67,10 @@ class LinhaController extends Controller
     {
         $linha = Linha::findOrFail($id);
         $viagensData = $request->input('viagens');
+        // dd($viagensData);
 
         foreach ($viagensData as $viagemData) {
-            $viagem = $linha->viagens()->create($viagemData);
+            $linha->viagens()->create($viagemData);
         }
 
         return response()->json(['message' => 'Viagens adicionadas à linha com sucesso']);
@@ -82,9 +79,12 @@ class LinhaController extends Controller
     public function showViagens($id) 
     {
         $linha = Linha::with('viagens')->findOrFail($id);
-        $viagens = $linha->viagens();
+        // dd($linha->toArray());
+        $viagens = $linha->viagens;
+        
         return ViagemResource::collection($viagens);
     }
 }
 
 
+# os relacionamentos não estao funcionando. 

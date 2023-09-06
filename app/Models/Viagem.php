@@ -9,6 +9,8 @@ class Viagem extends Model
 {
     use HasFactory;
 
+    protected $table = 'viagens';
+
     protected $fillable = [
         'horario_partida',
         'horario_chegada',

@@ -12,7 +12,7 @@ class FuncionarioController extends Controller
 {
     public function index()
     {
-        $funcionarios = Funcionario::all();
+        $funcionarios = Funcionario::with('user')->get();
         return FuncionarioResource::collection($funcionarios);
     }
 
@@ -37,7 +37,10 @@ class FuncionarioController extends Controller
 
     public function show(string $id)
     {
-        return Funcionario::findOrFail($id);
+        $f = Funcionario::with('user')->findOrFail($id);
+        // dd($f->toArray());
+        return new FuncionarioResource($f);
+        // return $f;  
     }
 
     public function update(Request $request, string $id)

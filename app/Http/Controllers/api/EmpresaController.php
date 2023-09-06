@@ -64,4 +64,14 @@ class EmpresaController extends Controller
 
         return response("[DELETED $empresa->nome]", 200);
     }
+
+    // retorna todos os funcionarios de uma empresa
+    public function listFuncionarios($id) {
+
+        $empresa = Empresa::with('funcionarios')->findOrFail($id);
+
+        $funcionarios = $empresa->funcionarios;
+
+        return $funcionarios;
+    }
 }
