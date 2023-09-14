@@ -25,7 +25,7 @@ class LinhasController extends Controller
             'empresa_id' => $request->input('empresa_id')
         ];
         // $linhaData = $request->only(['cidade_origem', 'cidade_destino']);
-        dd($request->toArray()); 
+        // dd($request->toArray()); 
         $viagensData = $request->input('viagens');
         
         // dd($linhaData);
