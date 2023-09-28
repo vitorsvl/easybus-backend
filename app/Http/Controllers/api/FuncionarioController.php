@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 
 class FuncionarioController extends Controller
 {
-    public function index()
+    public function getAll()
     {
         $funcionarios = Funcionario::with('user')->get();
-        return FuncionarioResource::collection($funcionarios);
-    }
+        $fResource = FuncionarioResource::collection($funcionarios);
+        return $fResource->response()->getData(true)['data'];
+    }   
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         // cria um usuário
         $user = User::create([
@@ -35,11 +36,12 @@ class FuncionarioController extends Controller
         return response("[OK] funcionario $funcionario->name cadastrado!", 200);
     }
 
-    public function show(string $id)
+    public function getOne(string $id)
     {
         $f = Funcionario::with('user')->findOrFail($id);
         // dd($f->toArray());
-        return new FuncionarioResource($f);
+        $fResource = new FuncionarioResource($f);
+        return $fResource->response()->getData(true)['data'];
         // return $f;  
     }
 

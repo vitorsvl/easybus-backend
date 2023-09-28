@@ -18,6 +18,7 @@ class LinhaResource extends JsonResource
             'id' => $this->id,
             'cidade_origem' => $this->cidade_origem,
             'cidade_destino' => $this->cidade_destino,
+            'empresa' => $this->empresa,
             'viagens' => ViagemResource::collection($this->whenLoaded('viagens'))
         ];
     }

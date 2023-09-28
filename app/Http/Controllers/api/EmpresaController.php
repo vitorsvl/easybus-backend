@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FuncionarioResource;
+use App\Http\Resources\LinhaResource;
 use Illuminate\Http\Request;
 
 use App\Models\Empresa;
+use App\Models\Linha;
 
 class EmpresaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getAll()
     {
         return Empresa::all(); // retorna todas as empresas (get)
     }
@@ -20,7 +23,7 @@ class EmpresaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {   
         // dd($request->cnpj);
         Empresa::create($request->all());
@@ -31,7 +34,7 @@ class EmpresaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function getOne(string $id)
     {
         return Empresa::findOrFail($id);
     }
@@ -66,12 +69,20 @@ class EmpresaController extends Controller
     }
 
     // retorna todos os funcionarios de uma empresa
-    public function listFuncionarios($id) {
+    public function getFuncionarios($id) {
 
         $empresa = Empresa::with('funcionarios')->findOrFail($id);
 
-        $funcionarios = $empresa->funcionarios;
+        $funcionarios = $empresa->funcionarios; 
+        return FuncionarioResource::collection($funcionarios);
+    }
 
-        return $funcionarios;
+    public function getLinhas($id) {
+        $empresa = Empresa::with('linhas.viagens.paradas')->findOrFail($id);
+
+        $linhas = $empresa->linhas; 
+        
+        $linhasResource =  LinhaResource::collection($linhas);
+        return $linhasResource->response()->getData(true)['data'];
     }
 }

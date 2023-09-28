@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Passageiro;
 use Illuminate\Http\Request;
 
 class PassageiroController extends Controller
 {
-    public function index()
+    public function getAll()
     {
-        //
+        return Passageiro::all();
     }
 
     public function create()
@@ -17,17 +18,17 @@ class PassageiroController extends Controller
         //
     }
 
-    public function show(string $id)
+    public function getOne(string $id)
+    {
+        return Passageiro::findOrFail($id);
+    }
+
+    public function update(Request $request, $id)
     {
         //
     }
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
+    public function delete($id)
     {
         //
     }

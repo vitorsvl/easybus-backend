@@ -10,22 +10,22 @@ use Illuminate\Http\Request;
 
 class LinhasController extends Controller
 {
-    public function index()
+    public function getAll()
     {
-        // $linhas = Linha::with('viagens.paradas')->get();
-        // return LinhaResource::collection($linhas);
-        return Linha::all();
+        $linhas = Linha::with('viagens.paradas')->get();
+        $linhasResource =  LinhaResource::collection($linhas);
+        return $linhasResource->response()->getData(true)['data'];
+        // return Linha::all();
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $linhaData = [
             'cidade_origem' => $request->input('cidade_origem'),
             'cidade_destino' => $request->input('cidade_destino'),
             'empresa_id' => $request->input('empresa_id')
         ];
-        // $linhaData = $request->only(['cidade_origem', 'cidade_destino']);
-        // dd($request->toArray()); 
+        
         $viagensData = $request->input('viagens');
         
         // dd($linhaData);
@@ -43,10 +43,13 @@ class LinhasController extends Controller
         return response("[OK]", 200);
     }
 
-    public function show(string $id)
+    public function getOne(string $id)
     {
         $linha = Linha::with('viagens.paradas')->findOrFail($id);
-        return new LinhaResource($linha);
+        // dd($linha);
+        $linhaResource =  new LinhaResource($linha);
+
+        return $linhaResource->response()->getData(true)['data'];
     }
 
     public function update(Request $request, string $id)
@@ -67,10 +70,11 @@ class LinhasController extends Controller
     {
         $linha = Linha::findOrFail($id);
         $viagensData = $request->input('viagens');
-        // dd($viagensData);
+        dd($viagensData);
 
         foreach ($viagensData as $viagemData) {
             $linha->viagens()->create($viagemData);
+            # não está adicionando as paradas
         }
 
         return response()->json(['message' => 'Viagens adicionadas à linha com sucesso']);
@@ -86,5 +90,3 @@ class LinhasController extends Controller
     }
 }
 
-
-# os relacionamentos não estao funcionando. 
