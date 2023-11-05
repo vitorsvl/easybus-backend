@@ -17,6 +17,18 @@ class LinhasController extends Controller
         return $linhasResource->response()->getData(true)['data'];
         // return Linha::all();
     }
+    
+    public function getBySearch(Request $request) 
+    {   
+        $search = $request->input('search');
+
+        $linhas = Linha::with('viagens.paradas')
+            ->where('cidade_origem', 'LIKE', "%$search%")
+            ->orWhere('cidade_destino', 'LIKE', "%$search%")
+            ->get();
+
+        return $linhas;
+    }
 
     public function create(Request $request)
     {

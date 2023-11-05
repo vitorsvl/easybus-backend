@@ -13,6 +13,9 @@ Route::get('funcionarios/{id}', [FuncionarioController::class, 'getOne']);
 Route::delete('funcionarios/{id}', [FuncionarioController::class, 'delete']);
 Route::delete('empresas/{id}', [EmpresaController::class, 'delete']);
 
+// rota para criar adm (!!!)
+Route::post('admin', [AdminController::class, 'create']);
+Route::get('admin', [AdminController::class,'getAll']);
 // Rotas Empresas
 Route::get('empresas', [EmpresaController::class, 'getAll']);
 Route::get('empresas/{id}', [EmpresaController::class, 'getOne']);
@@ -24,6 +27,7 @@ Route::get('empresas/{id}/linhas', [EmpresaController::class, 'getLinhas']);
 
 //Rotas linhas e viagens 
 
+Route::get('linhas/buscar', [LinhasController::class, 'getBySearch']);
 Route::get('linhas', [LinhasController::class, 'getAll']);
 Route::get('linhas/{id}', [LinhasController::class, 'getOne']);
 Route::get('linhas/{id}/viagens', [LinhasController::class, 'showViagens']);
@@ -31,3 +35,4 @@ Route::get('linhas/{id}/viagens', [LinhasController::class, 'showViagens']);
 Route::post('linhas', [LinhasController::class, 'create']);
 Route::post('linhas/{id}/viagens', [LinhasController::class, 'addViagensToLinha']);
 Route::delete('linhas/{id}', [LinhasController::class, 'delete']);
+

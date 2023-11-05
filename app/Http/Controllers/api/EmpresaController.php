@@ -26,9 +26,9 @@ class EmpresaController extends Controller
     public function create(Request $request)
     {   
         // dd($request->cnpj);
-        Empresa::create($request->all());
-
-        return response("[OK]", 200);
+        $empresa = Empresa::create($request->all());
+	
+        return response(["id" => $empresa->id], 201);
     }
 
     /**

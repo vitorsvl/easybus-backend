@@ -33,7 +33,7 @@ class FuncionarioController extends Controller
             'empresa_id' => $request->input('empresa_id')
         ]);
 
-        return response("[OK] funcionario $funcionario->name cadastrado!", 200);
+        return response("[OK] funcionario $funcionario->name cadastrado!", 201);
     }
 
     public function getOne(string $id)
