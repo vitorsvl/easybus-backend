@@ -17,7 +17,7 @@ class AdminController extends Controller
     public function create(Request $request) 
     {
          // cria um usuário
-         $user = User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
@@ -28,7 +28,6 @@ class AdminController extends Controller
             'user_id' => $user->id
         ]);
 
-        return response("[OK] Administrador $admin->name cadastrado!", 201);
-  
+        return $user->createToken('authToken')->plainTextToken;  
     }
 }

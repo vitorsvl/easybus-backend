@@ -19,6 +19,13 @@ class FuncionarioController extends Controller
 
     public function create(Request $request)
     {
+        # validando as credenciais
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
+
         // cria um usuário
         $user = User::create([
             'name' => $request->input('name'),
@@ -33,7 +40,9 @@ class FuncionarioController extends Controller
             'empresa_id' => $request->input('empresa_id')
         ]);
 
-        return response("[OK] funcionario $funcionario->name cadastrado!", 201);
+        // dd($funcionario);
+
+        return $user->createToken('authToken')->plainTextToken;
     }
 
     public function getOne(string $id)
@@ -41,6 +50,7 @@ class FuncionarioController extends Controller
         $f = Funcionario::with('user')->findOrFail($id);
         // dd($f->toArray());
         $fResource = new FuncionarioResource($f);
+        // dd($fResource);
         return $fResource->response()->getData(true)['data'];
         // return $f;  
     }

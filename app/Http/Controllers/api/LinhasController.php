@@ -52,7 +52,7 @@ class LinhasController extends Controller
                 $viagem->paradas()->create($paradaData);
             }
         }
-        return response("[OK]", 200);
+        return response(["id" => $linha->id], 201);
     }
 
     public function getOne(string $id)
