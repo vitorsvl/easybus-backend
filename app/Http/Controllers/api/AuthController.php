@@ -17,19 +17,19 @@ class AuthController extends Controller
             $user = auth()->user();
 
             if ($user->administrador) {
-                $userType = 0;
+                $userRole = 'administrador';
             }
             else if ($user->funcionario) {
-                $userType = 1;
+                $userRole = 'funcionario';
             }
             else if ($user->passageiro) {
-                $userType = 2;
+                $userRole = 'passageiro';
             }
             // Verifica o tipo de usuário e prepara os dados de retorno
             $userData = [
                 'user' => $user,
                 'token' => $user->createToken('authToken')->plainTextToken,
-                'user_type' => $userType,
+                'role' => $userRole,
                 // Adicione mais informações do usuário, se necessário
             ];
             // dd($userData);
