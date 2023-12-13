@@ -22,4 +22,8 @@ class Linha extends Model
     public function viagens() {
         return $this->hasMany('App\Models\Viagem');
     }
+
+    public function passageiros() {
+        return $this->belongsToMany('App\Models\Passageiro', 'passageiro_linha', 'linha_id', 'passageiro_id');
+    }
 }

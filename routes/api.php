@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\Funcionario;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,11 +29,20 @@ Route::middleware(['auth:sanctum', 'funcionario', 'cors'])->group(function () {
 });
 
 # ROTAS EXCLUSIVAS DO PASSAGEIRO
-Route::middleware(['auth:sanctum', 'passageiro'])->group(function () {
-    # colocar futuramente as rotas de linhas favoritas
+Route::middleware(['auth:sanctum', 'passageiro', 'cors'])->group(function () {
+     // Rota para obter linhas favoritas
+     Route::get('/linhas-favoritas/{id}', [PassageiroController::class, 'getFavoritas']);
+     // Rota para adicionar linha favorita
+     Route::post('/adicionar-favorita/{id}', [PassageiroController::class, 'adicionarFavorita']);
+     // Rota para remover linha favorita
+     Route::delete('/remover-favorita/{id}', [PassageiroController::class, 'removerFavorita']);
 });
 
 # ROTAS PÚBLICAS
+# rota criar passageiro
+Route::middleware(['cors'])->group(function () { 
+    Route::post('passageiros', [PassageiroController::class, 'create']);
+});
 
 Route::get('empresas/{id}', [EmpresaController::class, 'getOne']);
 Route::get('linhas/buscar', [LinhasController::class, 'getBySearch']);
@@ -42,9 +50,6 @@ Route::get('linhas', [LinhasController::class, 'getAll']);
 Route::get('linhas/{id}', [LinhasController::class, 'getOne']);
 Route::get('linhas/{id}/viagens', [LinhasController::class, 'showViagens']);
 
-Route::middleware(['cors'])->group(function () { 
-    Route::post('passageiros', [PassageiroController::class, 'create']);
-});
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 // Route::post('funcionarios', [FuncionarioController::class, 'create']);

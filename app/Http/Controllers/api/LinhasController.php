@@ -15,7 +15,7 @@ class LinhasController extends Controller
         $linhas = Linha::with('viagens.paradas')->get();
         $linhasResource =  LinhaResource::collection($linhas);
         return $linhasResource->response()->getData(true)['data'];
-        // return Linha::all();
+    
     }
     
     public function getBySearch(Request $request) 
@@ -66,7 +66,24 @@ class LinhasController extends Controller
 
     public function update(Request $request, string $id)
     {
-       //
+        $request->validate([
+            'cidade_origem' => 'required',
+            'cidade_destino' => 'required',
+            'empresa_id' => 'required',
+        ]);
+    
+        // Encontrar a linha pelo ID
+        $linha = Linha::findOrFail($id);
+    
+        // Atualizar os dados da linha
+        $linha->update([
+            'cidade_origem' => $request->input('cidade_origem'),
+            'cidade_destino' => $request->input('cidade_destino'),
+            'empresa_id' => $request->input('empresa_id'),
+        ]);
+    
+        return response("[UPDATED $linha]", 200);
+    
     }
 
     public function delete(string $id)

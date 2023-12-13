@@ -15,7 +15,7 @@ class FuncionarioController extends Controller
         $funcionarios = Funcionario::with('user')->get();
         $fResource = FuncionarioResource::collection($funcionarios);
         return $fResource->response()->getData(true)['data'];
-    }   
+    }
 
     public function create(Request $request)
     {
@@ -41,8 +41,8 @@ class FuncionarioController extends Controller
         ]);
 
         // dd($funcionario);
-
-        return $user->createToken('authToken')->plainTextToken;
+        return response("[OK]", 201);
+        // return $user->createToken('authToken')->plainTextToken;
     }
 
     public function getOne(string $id)
@@ -57,7 +57,30 @@ class FuncionarioController extends Controller
 
     public function update(Request $request, string $id)
     {
-       //
+        // Validação dos dados recebidos na requisição
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id, // Verificar a unicidade, ignorando o usuário com ID atual
+            'cpf' => 'required',
+            'empresa_id' => 'required',
+        ]);
+
+        // Encontrar o funcionário pelo ID
+        $funcionario = Funcionario::findOrFail($id);
+
+        // Atualizar os dados do usuário associado
+        $funcionario->user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        // Atualizar funcionário
+        $funcionario->update([
+            'cpf' => $request->input('cpf'),
+            'empresa_id' => $request->input('empresa_id'),
+        ]);
+
+        return response("[UPDATED $funcionario->name]", 200);
     }
 
     public function delete(string $id)
@@ -65,7 +88,7 @@ class FuncionarioController extends Controller
         $funcionario = Funcionario::findOrFail($id);
         $funcionario->delete();
 
-        return response("[DELETED $funcionario->nome]", 200);
+        return response("[DELETED $funcionario->nome]", 201);
     }
 }
 

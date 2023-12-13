@@ -18,4 +18,8 @@ class Passageiro extends User
         return $this->belongsTo('App\Models\User');
     }
 
+    public function linhasFavoritas() {
+        return $this->belongsToMany('App\Models\Linha', 'passageiro_linha', 'passageiro_id', 'linha_id');
+    }
+
 }
