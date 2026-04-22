@@ -23,10 +23,6 @@ O sistema foi modelado para atender a três perfis de usuários distintos:
 Como esta é uma aplicação Laravel padrão, siga os passos abaixo para configurá-la localmente:
 
 1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/seu-usuario/easybus-laravel.git
-    cd easybus-laravel
-    ```
 
 2.  **Instale as dependências do PHP:**
     ```bash
